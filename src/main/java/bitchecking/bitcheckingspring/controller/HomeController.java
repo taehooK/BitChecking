@@ -1,37 +1,29 @@
 package bitchecking.bitcheckingspring.controller;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import bitchecking.bitcheckingspring.AppConfig;
+import bitchecking.bitcheckingspring.api.Coin;
+import bitchecking.bitcheckingspring.api.IApi;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.UUID;
 @Controller
 public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        try {
-            URL url = new URL("https://api.upbit.com/v1/ticker?markets=KRW-BTC");
-            BufferedReader bf;
-            bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-            String result = bf.readLine();
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        IApi api1 = ac.getBean("upbitApi", IApi.class);
+        Double price_one = api1.getPrice(Coin.BTC);
+        model.addAttribute("price_one", String.format("%.2f", price_one));
 
-            JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
-            String price = (String) jsonObject.get("trade_price");
-            model.addAttribute("other_price", price);
+        IApi api2 = ac.getBean("binanceApi", IApi.class);
+        Double price_other = api2.getPrice(Coin.BTC);
+        model.addAttribute("price_other", String.format("%.2f", price_other));
 
-        }catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
+        Double diff = price_other / price_one;
+        model.addAttribute("price_diff", String.format("%.2f", diff));
 
         return "index";
     }

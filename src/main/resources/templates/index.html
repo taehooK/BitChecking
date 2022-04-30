@@ -21,38 +21,39 @@
 <hr>
 
 
-<div class="coinTable" style="width:400px; float:left; margin:20px">
-    <form>
-        <select name="one_exchange">
-            <option value="1">바이낸스</option>
-            <option value="2">업비트</option>
+<div class="container contents">
+    <div class="coinTable" style="float:left; margin:20px">
+        <form>
+            <select name="one_exchange">
+                <option value="1">바이낸스</option>
+                <option value="2">업비트</option>
 
-        </select>
-        <select name="other_exchange">
-            <option value="1">바이낸스</option>
-            <option value="2">업비트</option>
-        </select>
-    </form>
+            </select>
+            <select name="other_exchange">
+                <option value="1">바이낸스</option>
+                <option value="2">업비트</option>
+            </select>
+        </form>
 
-    <table class="table">
-        <thead>
-        <th scope="col">코인명</th>
-        <th scope="col">바이낸스</th>
-        <th scope="col">업비트</th>
-        <th scope="col">시세 차이</th>
-        </thead>
+        <table class="table">
+            <thead>
+            <th scope="col">코인명</th>
+            <th scope="col">바이낸스</th>
+            <th scope="col">업비트</th>
+            <th scope="col">시세 차이</th>
+            </thead>
 
-        <tbody>
-        <tr>
-            <th scope="row">비트코인</th>
-            <td th:text="${price_one}">123</td>
-            <td th:text="${price_other}">1234</td>
-            <td th:text="${diff}">1234</td>
-        </tr>
-        </tbody>
-    </table>
+            <tbody>
+            <tr>
+                <th scope="row">비트코인</th>
+                <td th:text="${price_one}">123</td>
+                <td th:text="${price_other}">1234</td>
+                <td th:text="${price_diff}">1234</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-
 
 </body>
 </html>
